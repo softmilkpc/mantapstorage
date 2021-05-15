@@ -16,7 +16,7 @@ This is a telegram bot helps you to store your files and get the share able perm
 
 - `DB_CHANNEL_ID:` Your telegram channel id like -1001355218755
 
-- `OWNER_ID:` Get your user id from [MissRose <img src="https://telegra.ph/file/0a36032bd2221c8d4209d.jpg" width="30" height="30">](https://telegram.dog/MissRose_bot) or [File Store Nsbot <img src="https://telegra.ph/file/bdd3352951be090a56590.jpg" width="30" height="30">](https://telegram.dog/mantapstoragebot)
+- `OWNER_ID:` Get your user id from [MissRose <img src="https://telegra.ph/file/0a36032bd2221c8d4209d.jpg" width="30" height="30">](https://telegram.dog/MissRose_bot) or [Mantapjozzstoragebot <img src="https://telegra.ph/file/bdd3352951be090a56590.jpg" width="30" height="30">](https://telegram.dog/mantapstoragebot)
 
 ## Deploy to heroku 🗳
 Press the button Deploy to heroku and give the values for the config vars. 👇
