@@ -61,8 +61,9 @@ async def start(c, m, cb=False):
 
         else: #if file not from channel
             user = await c.get_users(int(chat_id))
-            caption += "**--Mantapjozz Channel:--**\n\n"
-            caption += f"__Tutorial:__ Untuk menonton silahkan Klik --download-- lalu klik **start** untuk menonton video atau file\n"
+            caption += "**--Tutorial Mantapjozz Channel:--**\n\n"
+            caption += f"__Untuk menonton video silahkan Klik **download** lalu klik **start** untuk menonton video atau file__\n\n"
+            caption += f"__==================__\n"
             caption += f"__🏩 Channel:__ @mantapvids\n"
             caption += f"__🏩 Hastag :__ #video #staycolayforlaif\n\n"
 
