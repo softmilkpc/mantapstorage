@@ -66,7 +66,7 @@ async def start(c, m, cb=False):
             caption += f"__🐧 Last Name:__ `{user.last_name}`\n\n" if user.last_name else ""
             caption += f"__👁 User Name:__ @{user.username}\n\n" if user.username else ""
 
-        await msg.copy(m.from_user.id, caption=none)
+        await msg.copy(m.from_user.id, caption=caption)
 
 
     else: # sending start message
