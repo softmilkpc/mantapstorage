@@ -1,5 +1,5 @@
 {
-  "name": "File Store",
+  "name": "Mantap File Storage",
   "description": "Telegram bot to store your telegram files",
   "keywords": [
     "telegram",
@@ -8,9 +8,9 @@
     "Files"
   ],
   "logo": "https://telegra.ph/file/bdd3352951be090a56590.jpg",
-  "success_url": "https://telegram.dog/filestore_Nsbot",
-  "website": "https://github.com/Ns-Bots/TG-File-Store",
-  "repository": "https://github.com/Ns-Bots/TG-File-Store",
+  "success_url": "https://telegram.dog/mantapstoragebot",
+  "website": "https://github.com/softmilkpc/mantapstorage",
+  "repository": "https://github.com/softmilkpc/mantapstorage",
   "env": {
     "WEBHOOK": {
       "description": "Setting this to ANYTHING will enable webhooks when in env mode",
