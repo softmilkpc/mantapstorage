@@ -54,10 +54,13 @@ async def start(c, m, cb=False):
 
         if chat_id.startswith('-100'): #if file from channel
             channel = await c.get_chat(int(chat_id))
-            caption += "**--Uploader Details:--**\n\n"
-            caption += f"__📢 Channel Name:__ `{channel.title}`\n\n"
-            caption += f"__🗣 User Name:__ @{channel.username}\n\n" if channel.username else ""
-            caption += f"__👁 Members Count:__ {channel.members_count}\n\n" if channel.members_count else ""
+            caption += "**--Tutorial Mantapjozz Channel:--**\n\n"
+            caption += f"__Untuk menonton video silahkan Klik **download** lalu klik **start** untuk menonton video atau file__\n\n"
+            caption += f"__==================__\n"
+            caption += f"__📢 Channel Name:__ `{m.chat.title}`\n\n"
+            caption += f"__🏩 Channel:__ @mantapvids\n"
+            caption += f"__🏦 Hastag :__ #video #staycolayforlaif\n\n"
+            caption += f"__👁 Members Count:__ {m.chat.members_count}\n\n" if m.chat.members_count else ""
 
         else: #if file not from channel
             user = await c.get_users(int(chat_id))
@@ -65,7 +68,7 @@ async def start(c, m, cb=False):
             caption += f"__Untuk menonton video silahkan Klik **download** lalu klik **start** untuk menonton video atau file__\n\n"
             caption += f"__==================__\n"
             caption += f"__🏩 Channel:__ @mantapvids\n"
-            caption += f"__🏩 Hastag :__ #video #staycolayforlaif\n\n"
+            caption += f"__🏦 Hastag :__ #video #staycolayforlaif\n\n"
 
         await msg.copy(m.from_user.id, caption=caption)
 
