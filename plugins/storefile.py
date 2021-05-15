@@ -7,7 +7,7 @@ DB_CHANNEL_ID = os.environ.get("DB_CHANNEL_ID")
 
 
 #################################### FOR PRIVATE ################################################
-@Client.on_message((filters.document|filters.video|filters.audio) & filters.incoming & ~filters.edited & ~filters.channel)
+@Client.on_message((filters.document|filters.video|filters.audio|filters.photo) & filters.incoming & ~filters.edited & ~filters.channel)
 async def storefile(c, m):
 
     if m.document:
@@ -16,23 +16,26 @@ async def storefile(c, m):
        media = m.video
     if m.audio:
        media = m.audio
-    if m.image:
-       media = m.image
+    if m.photo:
+       media = m.photo
 
     # text
-    text = "--**🗃️ File Details:**--\n\n\n"
-    text += f"📂 __File Name:__ `{media.file_name}`\n\n"
-    text += f"💽 __Mime Type:__ `{media.mime_type}`\n\n"
-    text += f"📊 __File Size:__ `{humanbytes(media.file_size)}`\n\n"
-    if not m.document:
-        text += f"🎞 __Duration:__ `{TimeFormatter(media.duration * 10000)}`\n\n" if media.duration else ""
-        if m.audio:
-            text += f"🎵 __Title:__ `{media.title}`\n\n" if media.title else ""
-            text += f"🎙 __Performer:__ `{media.performer}`\n\n" if media.performer else ""
+    text = ""
+    if not m.photo:
+        text = "--**🗃️ File Details:**--\n\n\n"
+        text += f"📂 __File Name:__ `{media.file_name}`\n\n" if media.file_name else ""
+        text += f"💽 __Mime Type:__ `{media.mime_type}`\n\n" if media.mime_type else ""
+        text += f"📊 __File Size:__ `{humanbytes(media.file_size)}`\n\n" if media.file_size else ""
+        if not m.document:
+            text += f"🎞 __Duration:__ `{TimeFormatter(media.duration * 1000)}`\n\n" if media.duration else ""
+            if m.audio:
+                text += f"🎵 __Title:__ `{media.title}`\n\n" if media.title else ""
+                text += f"🎙 __Performer:__ `{media.performer}`\n\n" if media.performer else ""
+    text += f"__✏ Caption:__ `{m.caption}`\n\n" if m.caption else ""
     text += "**--Uploader Details:--**\n\n\n"
-    text += f"__🦚 First Name:__ `{m.from_user.first_name} {m.from_user.last_name}`\n\n" else ""
+    text += f"__🦚 First Name:__ `{m.from_user.first_name}`\n\n"
+    text += f"__🐧 Last Name:__ `{m.from_user.last_name}`\n\n" if m.from_user.last_name else ""
     text += f"__👁 User Name:__ @{m.from_user.username}\n\n" if m.from_user.username else ""
-    text += f"__👁 Members Count:__ {channel.members_count}\n\n" if channel.members_count else ""
 
     # if databacase channel exist forwarding message to channel
     if DB_CHANNEL_ID:
@@ -59,7 +62,7 @@ async def storefile(c, m):
 
 #################################### FOR CHANNEL################################################
 
-@Client.on_message((filters.document|filters.video|filters.audio) & filters.incoming & filters.channel & ~filters.edited)
+@Client.on_message((filters.document|filters.video|filters.audio|filters.photo) & filters.incoming & filters.channel & ~filters.edited)
 async def storefile_channel(c, m):
 
     if m.document:
@@ -68,24 +71,25 @@ async def storefile_channel(c, m):
        media = m.video
     if m.audio:
        media = m.audio
-    if m.image:
-       media = m.image
+    if m.photo:
+       media = m.photo
 
     # text
-    text = "**🗃️ Details:**\n\n\n"
-    text += f"📂 __File Name:__ `{media.file_name}`\n\n"
-    text += f"💽 __Mime Type:__ `{media.mime_type}`\n\n"
-    text += f"📊 __File Size:__ `{humanbytes(media.file_size)}`\n\n"
-    if not m.document:
-        text += f"🎞 __Duration:__ `{TimeFormatter(media.duration * 10000)}`\n\n" if media.duration else ""
-        if m.audio:
-            text += f"🎵 __Title:__ `{media.title}`\n\n" if media.title else ""
-            text += f"🎙 __Performer:__ `{media.performer}`\n\n" if media.performer else ""
+    text = ""
+    if not m.photo:
+        text = "**🗃️ File Details:**\n\n\n"
+        text += f"📂 __File Name:__ `{media.file_name}`\n\n" if media.file_name else ""
+        text += f"💽 __Mime Type:__ `{media.mime_type}`\n\n" if media.mime_type else ""
+        text += f"📊 __File Size:__ `{humanbytes(media.file_size)}`\n\n" if media.file_size else ""
+        if not m.document:
+            text += f"🎞 __Duration:__ `{TimeFormatter(media.duration * 1000)}`\n\n" if media.duration else ""
+            if m.audio:
+                text += f"🎵 __Title:__ `{media.title}`\n\n" if media.title else ""
+                text += f"🎙 __Performer:__ `{media.performer}`\n\n" if media.performer else ""
     text += f"__✏ Caption:__ `{m.caption}`\n\n"
     text += "**Uploader Details:**\n\n\n"
     text += f"__📢 Channel Name:__ `{m.chat.title}`\n\n"
     text += f"__🗣 User Name:__ @{m.chat.username}\n\n" if m.chat.username else ""
-    text += f"__👤 Channel Id:__ `{m.chat.id}`\n\n"
     text += f"__👁 Members Count:__ {m.chat.members_count}\n\n" if m.chat.members_count else ""
 
     # if databacase channel exist forwarding message to channel
