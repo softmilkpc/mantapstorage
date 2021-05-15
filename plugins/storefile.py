@@ -31,7 +31,6 @@ async def storefile(c, m):
             if m.audio:
                 text += f"🎵 __Title:__ `{media.title}`\n\n" if media.title else ""
                 text += f"🎙 __Performer:__ `{media.performer}`\n\n" if media.performer else ""
-    text += f"__✏ Caption:__ `{m.caption}`\n\n" if m.caption else ""
     text += "**--Uploader Details:--**\n\n\n"
     text += f"__🦚 First Name:__ `{m.from_user.first_name}`\n\n"
     text += f"__🐧 Last Name:__ `{m.from_user.last_name}`\n\n" if m.from_user.last_name else ""
@@ -86,7 +85,6 @@ async def storefile_channel(c, m):
             if m.audio:
                 text += f"🎵 __Title:__ `{media.title}`\n\n" if media.title else ""
                 text += f"🎙 __Performer:__ `{media.performer}`\n\n" if media.performer else ""
-    text += f"__✏ Caption:__ `{m.caption}`\n\n"
     text += "**Uploader Details:**\n\n\n"
     text += f"__📢 Channel Name:__ `{m.chat.title}`\n\n"
     text += f"__🗣 User Name:__ @{m.chat.username}\n\n" if m.chat.username else ""
