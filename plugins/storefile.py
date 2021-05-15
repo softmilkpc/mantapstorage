@@ -24,14 +24,15 @@ async def storefile(c, m):
     if not m.photo:
         text = "--**🗃️ File Details:**--\n\n\n"
         text += f"📂 __File Name:__ `{media.file_name}`\n\n" if media.file_name else ""
-        text += f"💽 __Mime Type:__ `{media.mime_type}`\n\n" if media.mime_type else ""
+        text += f"💽 __File Format:__ `{media.mime_type}`\n\n" if media.mime_type else ""
         text += f"📊 __File Size:__ `{humanbytes(media.file_size)}`\n\n" if media.file_size else ""
         if not m.document:
             text += f"🎞 __Duration:__ `{TimeFormatter(media.duration * 1000)}`\n\n" if media.duration else ""
             if m.audio:
                 text += f"🎵 __Title:__ `{media.title}`\n\n" if media.title else ""
                 text += f"🎙 __Performer:__ `{media.performer}`\n\n" if media.performer else ""
-    text += "**--@mantapvids Channel--**\n\n\n"
+    text += "**--Mantapjozz Channel:--**\n\n\n"
+    text += f"__🏩 Channel:__ @mantapvids\n\n"
 
     # if databacase channel exist forwarding message to channel
     if DB_CHANNEL_ID:
@@ -46,7 +47,7 @@ async def storefile(c, m):
 
     # making buttons
     buttons = [[
-        InlineKeyboardButton(text="Open Url 🔗", url=url),
+        InlineKeyboardButton(text="Download Video 🔗", url=url),
         InlineKeyboardButton(text="Share Link 👤", url=share_url)
     ]]
 
@@ -90,22 +91,6 @@ async def storefile_channel(c, m):
     if DB_CHANNEL_ID:
         msg = await m.copy(int(DB_CHANNEL_ID))
         await msg.reply(text)
-
-    # creating urls
-    bot = await c.get_me()
-    url = f"https://t.me/{bot.username}?start={m.chat.id}_{m.message_id}" if not DB_CHANNEL_ID else f"https://t.me/{bot.username}?start={m.chat.id}_{msg.message_id}"
-    txt = urllib.parse.quote(text.replace('--', ''))
-    share_url = f"tg://share?url={txt}File%20Link%20👉%20{url}"
-
-    # making buttons
-    buttons = [[
-        InlineKeyboardButton(text="Download File 🔗", url=url),
-        InlineKeyboardButton(text="Share Link 👤", url=share_url)
-    ]]
-
-    # Editing and adding the buttons
-    await m.edit_reply_markup(InlineKeyboardMarkup(buttons))
-
 
 def humanbytes(size):
     if not size:
