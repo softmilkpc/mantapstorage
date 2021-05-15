@@ -15,16 +15,12 @@ OWNER_ID = os.environ.get("OWNER_ID")
 @Client.on_message(filters.command('start') & filters.incoming & filters.private)
 async def start(c, m, cb=False):
     owner = await c.get_users(int(OWNER_ID))
-    owner_username = owner.username if owner.username else 'Mantapjozz'
+    owner_username = owner.username if owner.username else 'mantapvids'
 
     # start text
     text = f"""Hey! {m.from_user.mention(style='md')}
-
 💡 ** I am Mantapjozz File Store Bot**
-
 `You can store your Telegram Media for permanent Link!`
-
-
 **👲 Maintained By:** {owner.mention(style='md')}
 """
 
@@ -65,10 +61,10 @@ async def start(c, m, cb=False):
 
         else: #if file not from channel
             user = await c.get_users(int(chat_id))
-            caption += "\n\n\n**--Uploader Details:--**\n\n"
-            caption += f"__🦚 First Name:__ `{user.first_name} {user.last_name}`\n\n"
+            caption += "**--Uploader Details:--**\n\n"
+            caption += f"__🦚 First Name:__ `{user.first_name}`\n\n"
+            caption += f"__🐧 Last Name:__ `{user.last_name}`\n\n" if user.last_name else ""
             caption += f"__👁 User Name:__ @{user.username}\n\n" if user.username else ""
-            caption += f"__👁 Members Count:__ {channel.members_count}\n\n"
 
         await msg.copy(m.from_user.id, caption=caption)
 
@@ -85,10 +81,9 @@ async def start(c, m, cb=False):
 async def me(c, m):
     me = await c.get_users(m.from_user.id)
     text = "--**YOUR DETAILS:**--\n\n\n"
-    text += f"__🦚 First Name:__ `{me.first_name} {me.last_name}`\n\n"
+    text += f"__🦚 First Name:__ `{me.first_name}`\n\n"
+    text += f"__🐧 Last Name:__ `{me.last_name}`\n\n" if me.last_name else ""
     text += f"__👁 User Name:__ @{me.username}\n\n" if me.username else ""
-    text += f"__👤 User Id:__ `{me.id}`\n\n"
-    text += f"__💬 DC ID:__ {me.dc_id}\n\n" if me.dc_id else ""
     text += f"__✔ Is Verified By TELEGRAM:__ `{me.is_verified}`\n\n" if me.is_verified else ""
     text += f"__👺 Is Fake:__ {me.is_fake}\n\n" if me.is_fake else ""
     text += f"__💨 Is Scam:__ {me.is_scam}\n\n" if me.is_scam else ""
