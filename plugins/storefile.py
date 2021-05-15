@@ -31,8 +31,9 @@ async def storefile(c, m):
             if m.audio:
                 text += f"🎵 __Title:__ `{media.title}`\n\n" if media.title else ""
                 text += f"🎙 __Performer:__ `{media.performer}`\n\n" if media.performer else ""
-    text += "**--Mantapjozz Channel:--**\n\n"
-    text += f"__Tutorial:__ Untuk menonton silahkan Klik --download-- lalu klik **start** untuk menonton video atau file\n"
+    text += "**--Tutorial Mantapjozz Channel:--**\n\n"
+    text += f"__Untuk menonton video silahkan Klik **download** lalu klik **start** untuk menonton video atau file__\n\n"
+    text += f"__==================__\n"
     text += f"__🏩 Channel:__ @mantapvids\n"
     text += f"__🏩 Hastag :__ #video #staycolayforlaif\n\n"
 
