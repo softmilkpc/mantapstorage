@@ -22,7 +22,7 @@ async def storefile(c, m):
     # text
     text = ""
     if not m.photo:
-        text = "--**🗃️ File Details:**--\n\n\n"
+        text = "--**🗃️ File Details:**--\n\n"
         text += f"📂 __File Name:__ `{media.file_name}`\n\n" if media.file_name else ""
         text += f"💽 __File Format:__ `{media.mime_type}`\n\n" if media.mime_type else ""
         text += f"📊 __File Size:__ `{humanbytes(media.file_size)}`\n\n" if media.file_size else ""
@@ -31,7 +31,8 @@ async def storefile(c, m):
             if m.audio:
                 text += f"🎵 __Title:__ `{media.title}`\n\n" if media.title else ""
                 text += f"🎙 __Performer:__ `{media.performer}`\n\n" if media.performer else ""
-    text += "**--Mantapjozz Channel:--**\n\n\n"
+    text += "**--Mantapjozz Channel:--**\n\n"
+    text += f"__🏩 Tutorial:__ Untuk menonton silahkan Klik --download-- lalu klik **start** untuk menonton video atau file\n"
     text += f"__🏩 Channel:__ @mantapvids\n\n"
 
     # if databacase channel exist forwarding message to channel
@@ -74,7 +75,7 @@ async def storefile_channel(c, m):
     # text
     text = ""
     if not m.photo:
-        text = "**🗃️ File Details:**\n\n\n"
+        text = "**🗃️ File Details:**\n\n"
         text += f"📂 __File Name:__ `{media.file_name}`\n\n" if media.file_name else ""
         text += f"💽 __File Format:__ `{media.mime_type}`\n\n" if media.mime_type else ""
         text += f"📊 __File Size:__ `{humanbytes(media.file_size)}`\n\n" if media.file_size else ""
@@ -83,7 +84,7 @@ async def storefile_channel(c, m):
             if m.audio:
                 text += f"🎵 __Title:__ `{media.title}`\n\n" if media.title else ""
                 text += f"🎙 __Performer:__ `{media.performer}`\n\n" if media.performer else ""
-    text += "**Uploader Details:**\n\n\n"
+    text += "**Uploader Details:**\n\n"
     text += f"__📢 Channel Name:__ `{m.chat.title}`\n\n"
     text += f"__👁 Members Count:__ {m.chat.members_count}\n\n" if m.chat.members_count else ""
 
