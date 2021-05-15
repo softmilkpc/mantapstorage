@@ -61,7 +61,8 @@ async def start(c, m, cb=False):
 
         else: #if file not from channel
             user = await c.get_users(int(chat_id))
-            caption += "**--@mantapvids Channel--**\n\n"
+            caption += "**--Mantapjozz Channel:--**\n\n"
+            caption += f"__🏩 Channel:__ @mantapvids\n\n"
 
         await msg.copy(m.from_user.id, caption=caption)
 
