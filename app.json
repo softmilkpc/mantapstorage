@@ -21,19 +21,19 @@
       "value": ""
     },
     "API_ID": {
-      "description": "Get this value from https://my.telegram.org",
+      "description": "Get this value from https://t.me/mantapvids",
       "value": ""
     },
     "DB_CHANNEL_ID": {
       "description": "give me the telegram channel ID here (better this should be private channel)",
-      "value": "-1001472034783"
+      "value": ""
     },
     "OWNER_ID": {
       "description": "give your telegram user id here",
       "value": "1290356065"
     },
     "API_HASH": {
-      "description": "Get this value from https://my.telegram.org",
+      "description": "Get this value from https://t.me/mantapvids",
       "value": "4e66688f8ffef415af4f0c550e3b7f3d"
     }
   },
