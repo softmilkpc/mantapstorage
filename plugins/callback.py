@@ -6,9 +6,10 @@ import logging.config
 logging.getLogger().setLevel(logging.ERROR)
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
-from .commands import start
+from .commands import start, BATCH
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+DB_CHANNEL_ID = os.environ.get("DB_CHANNEL_ID")
 OWNER_ID = os.environ.get("OWNER_ID")
 
 
@@ -54,10 +55,12 @@ async def about_cb(c, m):
 
     # about text
     about_text = f"""--**My Details:**--
-🤖 𝐌𝐲 𝐍𝐚𝐦𝐞: {bot.mention(style='md')}
+𝐌𝐲 𝐍𝐚𝐦𝐞: {bot.mention(style='md')}
     
-💻 𝐃𝐞𝐯𝐞𝐥𝐨𝐩𝐞𝐫: {owner.mention(style='md')}
-📢 𝐂𝐡𝐚𝐧𝐧𝐞𝐥: [Mantapjozz](https://t.me/mantapvids)
+📝 𝐋𝐚𝐧𝐠𝐮𝐚𝐠𝐞: [Python 3](https://www.python.org/)
+🧰 𝐅𝐫𝐚𝐦𝐞𝐰𝐨𝐫𝐤: [Pyrogram](https://github.com/pyrogram/pyrogram)
+👨‍💻 𝐃𝐞𝐯𝐞𝐥𝐨𝐩𝐞𝐫: {owner.mention(style='md')}
+📢 𝐂𝐡𝐚𝐧𝐧𝐞𝐥: [NS BOT UPDATES](https://t.me/mantapvids)
 """
 
     # creating buttons
@@ -83,3 +86,20 @@ async def about_cb(c, m):
 async def home_cb(c, m):
     await m.answer()
     await start(c, m, cb=True)
+
+
+@Client.on_callback_query(filters.regex('^done$'))
+async def done_cb(c, m):
+    BATCH.remove(m.from_user.id)
+    c.cancel_listener(m.from_user.id)
+    await m.message.delete()
+
+
+@Client.on_callback_query(filters.regex('^delete'))
+async def delete_cb(c, m):
+    await m.answer()
+    cmd, msg_id = m.data.split("+")
+    chat_id = m.from_user.id if not DB_CHANNEL_ID else int(DB_CHANNEL_ID)
+    message = await c.get_messages(chat_id, int(msg_id))
+    await message.delete()
+    await m.message.edit("Deleted files successfully 👨‍✈️")
