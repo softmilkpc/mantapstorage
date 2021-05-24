@@ -8,7 +8,7 @@
     "Files"
   ],
   "logo": "https://telegra.ph/file/bdd3352951be090a56590.jpg",
-  "success_url": "https://telegram.dog/mantapstoragebot",
+  "success_url": "https://telegram.dog/mantapstoragefilebot",
   "website": "https://github.com/softmilkpc/mantapstorage",
   "repository": "https://github.com/softmilkpc/mantapstorage",
   "env": {
@@ -28,13 +28,18 @@
       "description": "give me the telegram channel ID here (better this should be private channel)",
       "value": ""
     },
+    "UPDATE_CHANNEL": {
+      "description": "Your bot updates channel like mantapvids (username without @ for forcesub). (Leave empty it you don't want to add)",
+      "value": "",
+      "required": false
+    },
     "OWNER_ID": {
       "description": "give your telegram user id here",
-      "value": "1290356065"
+      "value": ""
     },
     "API_HASH": {
-      "description": "Get this value from https://t.me/mantapvids",
-      "value": "4e66688f8ffef415af4f0c550e3b7f3d"
+      "description": "Get this value from https://my.telegram.org",
+      "value": ""
     }
   },
   "addons": [
@@ -46,7 +51,7 @@
   }],
   "formation": {
     "worker": {
-      "quantity": 1,
+      "quantity": 2,
       "size": "free"
     }
   }
