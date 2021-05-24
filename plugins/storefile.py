@@ -1,5 +1,6 @@
 import os
 import urllib
+from .commands import encode_string
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 DB_CHANNEL_ID = os.environ.get("DB_CHANNEL_ID")
@@ -9,7 +10,7 @@ DB_CHANNEL_ID = os.environ.get("DB_CHANNEL_ID")
 #################################### FOR PRIVATE ################################################
 @Client.on_message((filters.document|filters.video|filters.audio|filters.photo) & filters.incoming & ~filters.edited & ~filters.channel)
 async def storefile(c, m):
-
+    send_message = await m.reply_text("**Processing...**", quote=True)
     if m.document:
        media = m.document
     if m.video:
@@ -22,15 +23,16 @@ async def storefile(c, m):
     # text
     text = ""
     if not m.photo:
-        text = "--**🗃️ File Details:**--\n\n"
+        text = "--**🗃️ File Details:**--\n\n\n"
         text += f"📂 __File Name:__ `{media.file_name}`\n\n" if media.file_name else ""
-        text += f"💽 __File Format:__ `{media.mime_type}`\n\n" if media.mime_type else ""
+        text += f"💽 __File Type:__ `{media.mime_type}`\n\n" if media.mime_type else ""
         text += f"📊 __File Size:__ `{humanbytes(media.file_size)}`\n\n" if media.file_size else ""
         if not m.document:
             text += f"🎞 __Duration:__ `{TimeFormatter(media.duration * 1000)}`\n\n" if media.duration else ""
             if m.audio:
                 text += f"🎵 __Title:__ `{media.title}`\n\n" if media.title else ""
                 text += f"🎙 __Performer:__ `{media.performer}`\n\n" if media.performer else ""
+    text += f"__✏ Caption:__ `{m.caption}`\n\n" if m.caption else ""
     text += "**--Tutorial Mantapjozz Channel:--**\n\n"
     text += f"__Untuk menonton video silahkan Klik **download** lalu klik **start** untuk menonton video atau file__\n\n"
     text += f"__==================__\n"
@@ -44,18 +46,21 @@ async def storefile(c, m):
 
     # creating urls
     bot = await c.get_me()
-    url = f"https://t.me/{bot.username}?start={m.chat.id}_{m.message_id}" if not DB_CHANNEL_ID else f"https://t.me/{bot.username}?start={m.chat.id}_{msg.message_id}"
+    base64_string = await encode_string(f"{m.chat.id}_{msg.message_id}")
+    url = f"https://t.me/{bot.username}?start={base64_string}"
     txt = urllib.parse.quote(text.replace('--', ''))
     share_url = f"tg://share?url={txt}File%20Link%20👉%20{url}"
 
     # making buttons
     buttons = [[
-        InlineKeyboardButton(text="Download Video 🔗", url=url),
+        InlineKeyboardButton(text="Open Url 🔗", url=url),
         InlineKeyboardButton(text="Share Link 👤", url=share_url)
+        ],[
+        InlineKeyboardButton(text="Delete 🗑", callback_data=f"delete+{msg.message_id}")
     ]]
 
     # sending message
-    await m.reply_text(
+    await send_message.edit(
         text,
         reply_markup=InlineKeyboardMarkup(buttons)
     )
@@ -77,7 +82,7 @@ async def storefile_channel(c, m):
     # text
     text = ""
     if not m.photo:
-        text = "**🗃️ File Details:**\n\n"
+        text = "**🗃️ File Details:**\n\n\n"
         text += f"📂 __File Name:__ `{media.file_name}`\n\n" if media.file_name else ""
         text += f"💽 __File Format:__ `{media.mime_type}`\n\n" if media.mime_type else ""
         text += f"📊 __File Size:__ `{humanbytes(media.file_size)}`\n\n" if media.file_size else ""
@@ -86,7 +91,8 @@ async def storefile_channel(c, m):
             if m.audio:
                 text += f"🎵 __Title:__ `{media.title}`\n\n" if media.title else ""
                 text += f"🎙 __Performer:__ `{media.performer}`\n\n" if media.performer else ""
-    text += "**--Tutorial Mantapjozz Channel:--**\n\n"
+    text += f"__✏ Caption:__ `{m.caption}`\n\n"
+     text += "**--Tutorial Mantapjozz Channel:--**\n\n"
     text += f"__Untuk menonton video silahkan Klik **download** lalu klik **start** untuk menonton video atau file__\n\n"
     text += f"__==================__\n"
     text += f"__📢 Channel Name:__ `{m.chat.title}`\n\n"
@@ -98,6 +104,23 @@ async def storefile_channel(c, m):
     if DB_CHANNEL_ID:
         msg = await m.copy(int(DB_CHANNEL_ID))
         await msg.reply(text)
+
+    # creating urls
+    bot = await c.get_me()
+    base64_string = await encode_string(f"{m.chat.id}_{m.message_id}")
+    url = f"https://t.me/{bot.username}?start={base64_string}"
+    txt = urllib.parse.quote(text.replace('--', ''))
+    share_url = f"tg://share?url={txt}File%20Link%20👉%20{url}"
+
+    # making buttons
+    buttons = [[
+        InlineKeyboardButton(text="Open Url 🔗", url=url),
+        InlineKeyboardButton(text="Share Link 👤", url=share_url)
+    ]]
+
+    # Editing and adding the buttons
+    await m.edit_reply_markup(InlineKeyboardMarkup(buttons))
+
 
 def humanbytes(size):
     if not size:
